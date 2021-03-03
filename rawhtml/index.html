@@ -1,32 +1,34 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-<head>
-  <title>Coopflix</title>
-</head>
-<body>
-<h1>Coopflix</h1>
-<h2>Don't do homework | Watch Coopflix instead</h2>
-<h3 id="user-greeting"></h3>
+  <head>
+    <title>Coopflix</title>
+  </head>
+  <body>
+    <h1>Coopflix</h1>
+    <h2>Don't do homework | Watch Coopflix instead</h2>
+    <h3 id="user-greeting"></h3>
 
-<script>
-    let userGreeting = document.getElementById("user-greeting");
-    fetch("http://localhost:4567/me", {
+    <script>
+      let userGreeting = document.getElementById("user-greeting");
+      fetch("http://localhost:4567/me", {
         headers: {
-            coopflixuser: localStorage.getItem('coopflixuser')
+          coopflixuser: localStorage.getItem("coopflixuser")
         }
-    })
+      })
         .then(response => {
-            if (!response.ok) {
-                throw new Error('not logged in');
-            } else {
-                return response.json();
-            }
-        }).then(json => {
-        userGreeting.innerHTML = `Hello ${json.name}`;
-    }).catch(err => {
-        userGreeting.innerHTML = '<a href="login.html">Click here to login.</a>';
-    });
-
-</script>
-</body>
+          if (!response.ok) {
+            throw new Error("not logged in");
+          } else {
+            return response.json();
+          }
+        })
+        .then(json => {
+          userGreeting.innerHTML = `Hello ${json.name}`;
+        })
+        .catch(err => {
+          userGreeting.innerHTML =
+            '<a href="login.html">Click here to login.</a>';
+        });
+    </script>
+  </body>
 </html>

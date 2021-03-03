@@ -1,72 +1,78 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-<head>
-  <title>Coopflix | Login</title>
-  <style>
-    label {
-      display: block;
-    }
+  <head>
+    <title>Coopflix | Login</title>
+    <style>
+      label {
+        display: block;
+      }
 
-    input[type='submit'],
-    label {
-      margin-top: 1rem;
-    }
-  </style>
-</head>
-<body>
-<h1>Coopflix</h1>
-<h2>Don't do homework | Watch Coopflix instead</h2>
+      input[type="submit"],
+      label {
+        margin-top: 1rem;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Coopflix</h1>
+    <h2>Don't do homework | Watch Coopflix instead</h2>
 
-<form>
-  <h3 id="login-response"></h3>
-  <div>
-    <label for="username">Username:</label>
-    <input type="text" id="username" name="username">
-  </div>
+    <form>
+      <h3 id="login-response"></h3>
+      <div>
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="username" />
+      </div>
 
-  <div>
-    <label for="pass">Password (8 characters minimum):</label>
-    <input type="password" id="pass" name="password"
-           minlength="8" required>
-  </div>
+      <div>
+        <label for="pass">Password (8 characters minimum):</label>
+        <input
+          type="password"
+          id="pass"
+          name="password"
+          minlength="8"
+          required
+        />
+      </div>
 
-  <button type="submit">Sign in</button>
-</form>
+      <button type="submit">Sign in</button>
+    </form>
 
-<script>
-    let loginResponse = document.getElementById("login-response");
+    <script>
+      let loginResponse = document.getElementById("login-response");
 
-    function handleSubmit(event) {
+      function handleSubmit(event) {
         event.preventDefault();
         const data = new FormData(event.target);
         const authObj = Object.fromEntries(data.entries());
         fetch("http://localhost:4567/login", {
-            method: 'POST',
-            mode: 'cors',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(authObj)
-        }).then(response => {
+          method: "POST",
+          mode: "cors",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify(authObj)
+        })
+          .then(response => {
             if (!response.ok) {
-                throw new Error(response.status);
-                } else {
-                return response.json();
-                }})
-                .then(json => {
-                // todo: fix cors
-                // window.localStorage.setItem('coopflixuser', response.headers.coopflixuser);
-                window.localStorage.setItem('coopflixuser', json.id);
-                  window.location.replace('index.html');
-                }).catch(err => {
+              throw new Error(response.status);
+            } else {
+              return response.json();
+            }
+          })
+          .then(json => {
+            // todo: fix cors
+            // window.localStorage.setItem('coopflixuser', response.headers.coopflixuser);
+            window.localStorage.setItem("coopflixuser", json.id);
+            window.location.replace("index.html");
+          })
+          .catch(err => {
+            loginResponse.innerHTML = err.message;
+          });
+      }
 
-                loginResponse.innerHTML = err.message;
-        });
-
-    }
-
-    const form = document.querySelector('form');
-    form.addEventListener('submit', handleSubmit);
-</script>
-</body>
+      const form = document.querySelector("form");
+      form.addEventListener("submit", handleSubmit);
+    </script>
+  </body>
 </html>
