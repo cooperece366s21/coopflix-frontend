@@ -23,7 +23,8 @@
           }
         })
         .then(json => {
-          userGreeting.innerHTML = `Hello ${json.name}`;
+          // todo: fix logout
+          userGreeting.innerHTML = `Hello ${json.name}. <a href="http://localhost:4567/logout">Logout</a>`;
         })
         .catch(err => {
           userGreeting.innerHTML =
