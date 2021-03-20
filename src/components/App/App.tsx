@@ -26,6 +26,7 @@ class App extends React.Component<AppProps, AppState> {
           <Login onLoggedIn={user => this.setState({ user })} />
         ) : (
           <span>Hello {user.name}</span>
+            // todo: logout component
             // todo: load the feed
         )}
       </div>
