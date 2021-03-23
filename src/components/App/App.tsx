@@ -2,6 +2,8 @@ import React from "react";
 import "./App.css";
 import api, { User } from "../../services/api";
 import { Login } from "../Login/Login";
+import { Logout } from "../Logout/Logout";
+import { UserFeed } from "../Feed/Feed";
 
 type AppProps = {};
 type AppState = { user: User | null };
@@ -25,9 +27,11 @@ class App extends React.Component<AppProps, AppState> {
         {user === null ? (
           <Login onLoggedIn={user => this.setState({ user })} />
         ) : (
-          <span>Hello {user.name}</span>
-            // todo: logout component
-            // todo: load the feed
+          <div>
+            <span>Hello {user.name}</span>
+            <Logout onLoggedOut={() => this.setState({ user: null })} />
+            <UserFeed />
+          </div>
         )}
       </div>
     );
