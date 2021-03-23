@@ -23,10 +23,10 @@ export class UserFeed extends React.Component<FeedProps, FeedState> {
       <div>
         {feed &&
           feed.shelves.map((shelf, idx) => (
-            <div>
+            <div key={idx}>
               <p>{shelf.title}</p>
               {shelf.shelfItems.map((shelfItem, itemIdx) => (
-                <div>{shelfItem.title}</div>
+                <div key={itemIdx}>{shelfItem.title}</div>
               ))}
             </div>
           ))}
