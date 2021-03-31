@@ -4,6 +4,7 @@ import api, { User } from "../../services/api";
 import { Login } from "../Login/Login";
 import { Logout } from "../Logout/Logout";
 import { UserFeed } from "../Feed/Feed";
+import { Box, Heading, Stack } from "@chakra-ui/react";
 
 type AppProps = {};
 type AppState = { user: User | null };
@@ -19,21 +20,27 @@ class App extends React.Component<AppProps, AppState> {
   render() {
     const { user } = this.state;
     return (
-      <div className="App">
-        <header className="App-header">
-          <h1>Coopflix</h1>
-          <p>Don't do homework | Watch Coopflix instead</p>
-        </header>
-        {user === null ? (
-          <Login onLoggedIn={user => this.setState({ user })} />
-        ) : (
-          <div>
-            <span>Hello {user.name}</span>
-            <Logout onLoggedOut={() => this.setState({ user: null })} />
-            <UserFeed />
-          </div>
-        )}
-      </div>
+      <Box className="App">
+        <Stack spacing={6}>
+          <Heading as="h1" size="4xl">
+            Coopflix
+          </Heading>
+          <Heading as="h2" size="2xl">
+            Don't do homework | Watch Coopflix instead
+          </Heading>
+        </Stack>
+        <Box>
+          {user === null ? (
+            <Login onLoggedIn={user => this.setState({ user })} />
+          ) : (
+            <Box>
+              <span>Hello {user.name}</span>
+              <Logout onLoggedOut={() => this.setState({ user: null })} />
+              <UserFeed />
+            </Box>
+          )}
+        </Box>
+      </Box>
     );
   }
 }

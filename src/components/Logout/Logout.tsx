@@ -1,21 +1,31 @@
+import { Button } from "@chakra-ui/react";
 import React from "react";
 import api from "../../services/api";
 
 export type LogoutProps = { onLoggedOut: () => void };
+export type LogoutState = { loading: boolean };
 
-export class Logout extends React.Component<LogoutProps> {
+export class Logout extends React.Component<LogoutProps, LogoutState> {
+  state: LogoutState = {
+    loading: false
+  };
+
   render() {
     return (
-      <span>
-        <button onClick={() => this.onClick()} type="submit">
-          Logout
-        </button>
-      </span>
+      <Button
+        isLoading={this.state.loading}
+        onClick={() => this.onClick()}
+        type="submit"
+      >
+        Logout
+      </Button>
     );
   }
 
-  onClick() {
-    api.logout();
+  async onClick() {
+    this.setState({ loading: true });
+    await api.logout();
+    this.setState({ loading: false });
     this.props.onLoggedOut();
   }
 }

@@ -1,3 +1,13 @@
+import {
+  Box,
+  Button,
+  FormControl,
+  FormLabel,
+  Heading,
+  Input,
+  InputGroup,
+  InputRightElement
+} from "@chakra-ui/react";
 import React from "react";
 import api, { User } from "../../services/api";
 
@@ -7,16 +17,20 @@ type LoginState = {
   username: string;
   password: string;
   loginResponse: string | null;
+  loading: boolean;
 };
 
 export class Login extends React.Component<LoginProps, LoginState> {
   state = {
     username: "",
     password: "",
-    loginResponse: null
+    loginResponse: null,
+    loading: false
   };
 
   async onSubmit() {
+    this.setState({ loading: true });
+
     const { onLoggedIn } = this.props;
     const { username, password } = this.state;
 
@@ -27,40 +41,64 @@ export class Login extends React.Component<LoginProps, LoginState> {
     } else {
       this.setState({ loginResponse: result.error });
     }
+
+    this.setState({ loading: false });
   }
 
   render() {
     return (
-      <div>
+      <Box>
         <form onSubmit={e => e.preventDefault()}>
-          {this.state.loginResponse && <h2>{this.state.loginResponse}</h2>}
-          <div>
-            <label htmlFor="username">Username:</label>
-            <input
-              type="text"
-              id="username"
-              name="username"
+          {this.state.loginResponse && (
+            <Heading as="h2" size="2xl">
+              {this.state.loginResponse}
+            </Heading>
+          )}
+          <FormControl id="username" isRequired>
+            <FormLabel>Username</FormLabel>
+            <Input
+              type=""
               value={this.state.username}
               onChange={e => this.setState({ username: e.currentTarget.value })}
             />
-          </div>
-          <div>
-            <label htmlFor="pass">Password (8 characters minimum):</label>
-            <input
+          </FormControl>
+          <FormControl id="password" isRequired>
+            <FormLabel>Password</FormLabel>
+            <Input
               type="password"
-              id="pass"
-              name="password"
               value={this.state.password}
               onChange={e => this.setState({ password: e.currentTarget.value })}
-              minLength={8}
-              required
             />
-          </div>
-          <button onClick={() => this.onSubmit()} type="submit">
+          </FormControl>
+          <Button
+            type="submit"
+            isLoading={this.state.loading}
+            onClick={() => this.onSubmit()}
+          >
             Sign in
-          </button>
+          </Button>
         </form>
-      </div>
+      </Box>
     );
   }
+}
+
+function PasswordInput() {
+  const [show, setShow] = React.useState(false);
+  const handleClick = () => setShow(!show);
+
+  return (
+    <InputGroup size="md">
+      <Input
+        pr="4.5rem"
+        type={show ? "text" : "password"}
+        placeholder="Enter password"
+      />
+      <InputRightElement width="4.5rem">
+        <Button h="1.75rem" size="sm" onClick={handleClick}>
+          {show ? "Hide" : "Show"}
+        </Button>
+      </InputRightElement>
+    </InputGroup>
+  );
 }
