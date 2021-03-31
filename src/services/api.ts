@@ -100,8 +100,8 @@ export async function login(
   }
 }
 
-export function logout() {
-  fetch(`${BACKEND_URL}/logout`, {
+export async function logout() {
+  await fetch(`${BACKEND_URL}/logout`, {
     method: "POST",
     headers: {
       coopflixuser: getCurrentUserId()

@@ -22,18 +22,24 @@ class App extends React.Component<AppProps, AppState> {
     return (
       <Box className="App">
         <Stack spacing={6}>
-          <Heading as="h1">Coopflix</Heading>
-          <Heading as="h2">Don't do homework | Watch Coopflix instead</Heading>
+          <Heading as="h1" size="4xl">
+            Coopflix
+          </Heading>
+          <Heading as="h2" size="2xl">
+            Don't do homework | Watch Coopflix instead
+          </Heading>
         </Stack>
-        {user === null ? (
-          <Login onLoggedIn={user => this.setState({ user })} />
-        ) : (
-          <div>
-            <span>Hello {user.name}</span>
-            <Logout onLoggedOut={() => this.setState({ user: null })} />
-            <UserFeed />
-          </div>
-        )}
+        <Box>
+          {user === null ? (
+            <Login onLoggedIn={user => this.setState({ user })} />
+          ) : (
+            <Box>
+              <span>Hello {user.name}</span>
+              <Logout onLoggedOut={() => this.setState({ user: null })} />
+              <UserFeed />
+            </Box>
+          )}
+        </Box>
       </Box>
     );
   }

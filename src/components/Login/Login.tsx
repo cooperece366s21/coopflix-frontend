@@ -1,3 +1,11 @@
+import {
+  Box,
+  Button,
+  FormControl,
+  FormLabel,
+  Heading,
+  Input
+} from "@chakra-ui/react";
 import React from "react";
 import api, { User } from "../../services/api";
 
@@ -7,16 +15,20 @@ type LoginState = {
   username: string;
   password: string;
   loginResponse: string | null;
+  loading: boolean;
 };
 
 export class Login extends React.Component<LoginProps, LoginState> {
   state = {
     username: "",
     password: "",
-    loginResponse: null
+    loginResponse: null,
+    loading: false
   };
 
   async onSubmit() {
+    this.setState({ loading: true });
+
     const { onLoggedIn } = this.props;
     const { username, password } = this.state;
 
@@ -27,40 +39,65 @@ export class Login extends React.Component<LoginProps, LoginState> {
     } else {
       this.setState({ loginResponse: result.error });
     }
+
+    this.setState({ loading: false });
   }
 
   render() {
     return (
-      <div>
+      <Box>
         <form onSubmit={e => e.preventDefault()}>
-          {this.state.loginResponse && <h2>{this.state.loginResponse}</h2>}
-          <div>
-            <label htmlFor="username">Username:</label>
-            <input
-              type="text"
-              id="username"
-              name="username"
+          {this.state.loginResponse && (
+            <Heading as="h2" size="2xl">
+              {this.state.loginResponse}
+            </Heading>
+          )}
+          <FormControl id="username" isRequired>
+            <FormLabel>Username</FormLabel>
+            <Input
+              type=""
               value={this.state.username}
               onChange={e => this.setState({ username: e.currentTarget.value })}
             />
-          </div>
-          <div>
-            <label htmlFor="pass">Password (8 characters minimum):</label>
-            <input
-              type="password"
-              id="pass"
-              name="password"
+          </FormControl>
+          <FormControl id="password" isRequired>
+            <FormLabel>Password</FormLabel>
+            <Input
+              type=""
               value={this.state.password}
               onChange={e => this.setState({ password: e.currentTarget.value })}
-              minLength={8}
-              required
             />
-          </div>
-          <button onClick={() => this.onSubmit()} type="submit">
+          </FormControl>
+          {/*<div>*/}
+          {/*  <label htmlFor="username">Username:</label>*/}
+          {/*  <input*/}
+          {/*    type="text"*/}
+          {/*    id="username"*/}
+          {/*    name="username"*/}
+          {/*    value={this.state.username}*/}
+          {/*    onChange={e => this.setState({ username: e.currentTarget.value })}*/}
+          {/*  />*/}
+          {/*</div>*/}
+          {/*<div>*/}
+          {/*  <label htmlFor="pass">Password (8 characters minimum):</label>*/}
+          {/*  <input*/}
+          {/*    type="password"*/}
+          {/*    id="pass"*/}
+          {/*    name="password"*/}
+          {/*    value={this.state.password}*/}
+          {/*    onChange={e => this.setState({ password: e.currentTarget.value })}*/}
+          {/*    minLength={8}*/}
+          {/*    required*/}
+          {/*  />*/}
+          {/*</div>*/}
+          <Button
+            isLoading={this.state.loading}
+            onClick={() => this.onSubmit()}
+          >
             Sign in
-          </button>
+          </Button>
         </form>
-      </div>
+      </Box>
     );
   }
 }
