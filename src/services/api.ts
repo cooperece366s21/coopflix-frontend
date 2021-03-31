@@ -45,7 +45,9 @@ export type Content = {
   thumbnail: string | null;
   distributorId: string | null;
   genre: string;
-  rating: string | null;
+  rating: {
+    value: string;
+  } | null;
 };
 
 export function getFeed(): Promise<Feed> {

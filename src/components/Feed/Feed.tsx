@@ -1,3 +1,4 @@
+import { Box, Heading, HStack, VStack } from "@chakra-ui/react";
 import React from "react";
 import api, { Feed } from "../../services/api";
 
@@ -20,17 +21,24 @@ export class UserFeed extends React.Component<FeedProps, FeedState> {
   render() {
     const { feed } = this.state;
     return (
-      <div>
+      <VStack>
         {feed &&
           feed.shelves.map((shelf, idx) => (
-            <div key={idx}>
-              <p>{shelf.title}</p>
-              {shelf.shelfItems.map((shelfItem, itemIdx) => (
-                <div key={itemIdx}>{shelfItem.title}</div>
-              ))}
-            </div>
+            <Box key={idx}>
+              <Heading as="h2" size="2xl">
+                {shelf.title}
+              </Heading>
+              <HStack spacing="24px">
+                {shelf.shelfItems.map((shelfItem, itemIdx) => (
+                  <Box bg="pink.100" key={itemIdx}>
+                    <p>{shelfItem.title}</p>
+                    <p>{shelfItem.rating && shelfItem.rating.value}</p>
+                  </Box>
+                ))}
+              </HStack>
+            </Box>
           ))}
-      </div>
+      </VStack>
     );
   }
 }
