@@ -6,6 +6,8 @@ import { Logout } from "../Logout/Logout";
 import { UserFeed } from "../Feed/Feed";
 import { Box, Heading, Stack } from "@chakra-ui/react";
 
+// props ~ inputs that don't change
+// state ~ internal and can change
 type AppProps = {};
 type AppState = { user: User | null };
 

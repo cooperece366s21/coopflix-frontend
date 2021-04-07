@@ -46,10 +46,12 @@ export class Login extends React.Component<LoginProps, LoginState> {
   }
 
   render() {
+    const { loginResponse } = this.state;
+
     return (
       <Box>
         <form onSubmit={e => e.preventDefault()}>
-          {this.state.loginResponse && (
+          {loginResponse && (
             <Heading as="h2" size="2xl">
               {this.state.loginResponse}
             </Heading>
